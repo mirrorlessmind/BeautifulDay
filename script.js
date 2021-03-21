@@ -39,7 +39,7 @@ $(document).ready(function(){
         searchHistoryContainer.append(searchTermDiv);
         console.log(formValues, city);
         //Form Value display
-        searchForCurrentCityWeather(city);
+        searchForCurrentCity(city);
         searchForFiveDayForecastWeather(city);
 });
         //Use Api Key to search with function Use Moment for date
