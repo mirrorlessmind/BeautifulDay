@@ -5,17 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=>, initial-scale=1.0">
     
-    <link
-    rel="stylesheet"
-    href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    />
-    <link
-    rel="stylesheet"
-    href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
-    <link
-    rel="stylesheet" href="/style.css"
-    />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
+    <link rel="stylesheet href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="/style.css"/>
 
     <title>Dashing 5 Day Weather</title>
 </head>
@@ -26,36 +18,32 @@
     </header>
 
     <body>
-    <div class="container">
-        <h1>Weather Dashboard</h1>
+   <div class="container">
         <div class="dashboard row">
-            <div class="form-inputs col-3">
-                <form id="search-form">
-                    <input type="text" name="city" placeholder="City Name" id="search-value" />
+            <div class="form-for-search col-6">
+                <form id ="search-form">
+                    <input type="text" name="city" placeholder="Search" />
                     <button type="submit" class="btn"> Search </button>
                 </form>
-                <div class="search-history">
-                    <h3>Search History</h3>
-                    <div id="past-searches">
-     
-                    </div> 
-                 </div>
-            </div>
-            <div class="weather-data col-9">
-                <h2>Current Weather</h2>
-                <div class="current-weather" id="current-weather">
-                    <div id="current-date"></div>
-                </div>
-                <h2>Five-Day Forecast</h2>
-                <div class="five-day-forecast row" id="five-day-forecast">
+                <div class="search-history"> </div>
+                 <h3>Search History</h3>
+                 <div id="past searches">
+                     <div class="past-search-term">
+                    </div>
                 </div>
             </div>
-        </div>
+            <div class="weather-data col-6">
+                <div class"current-weather" id="current-weather">
+                    <h3>Five Day Forecast Weather</h3>
+                    <div class="five-day-forecast row" id="five-day-forecast">
+                    </div>
+                </div>
+            </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-    <script src="./script.js"
+    <script src="/script.js
 </body>
 </html>
