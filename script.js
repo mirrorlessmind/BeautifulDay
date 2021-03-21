@@ -1,14 +1,14 @@
-
 // e80f67133f09a88799707360e64bc4ef
 $(document).ready(function(){
     //created weather planning document
     // variables created for city conditions and city herstory
-    var searchHerstoryContainer = $('#past-searches');
     var searchForm = $('#search-form');
+    var searchHistoryContainer = $('#past-searches');
     var currentWeatherContainer = $('#current-weather');
     var fiveDayForecastContainer = $('#five-day');
     var searchValueInput = $('#search-value');
     var apiKey = 'e80f67133f09a88799707360e64bc4ef';
+    var uvIndexBaseUrl ='https://api.openweathermap.org/data/2.5/onecall?';
     var baseUrl = 'https://api.openweathermap.org/data/2.5/weather?';
     var baseUrl2 = 'http://openweathermap.org/img/w/';
     var iconBaseUrl = 'http://openweathermap.org/img/w/';
@@ -23,66 +23,70 @@ $(document).ready(function(){
         var city = formValues[0].value;
     //Creating Element for Jquery
         var searchWordDiv = $('<button type="button" class=" btn past-search-word">');
-        searchWordDiv.click(function(event) {
+        searchWordDiv.click(function( event ) {
             event.preventDefault();
             var value = event.target
             var value =$(this).text();
+        //Form value Display
+            searchForFiveDayForecastWeather(value);
+            searchForCurrentCityWeather(value);
             console.log(value);
             
         });
-        searchHerstory.push(city);
-        localStorage.setItem("searchHerstory", JSON.stringify(searchHerstory));
+        searchHistory.push(city);
+        localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
         searchWordDiv.text(city);
-        searchHerstoryContainer.append(searchTermDiv);
+        searchHistoryContainer.append(searchTermDiv);
         console.log(formValues, city);
-    //Form Value display
-    searchForCurrentCityWeather(city);
-    searchForFiveDayForecastWeather(city);
+        //Form Value display
+        searchForCurrentCityWeather(city);
+        searchForFiveDayForecastWeather(city);
 });
-//Use Api Key to search with function
-        function searchForCurrentCityWeather(city) {
-        var fullUrl = baseUrl + "q=" + city + "&appid" + apiKey;
+        //Use Api Key to search with function Use Moment for date
+        function searchForCurrentCity(city) {
+        var fullUrl = baseUrl + "q=" + city + "&units=imperial" + "&appid" + apiKey;
         console.log(fullUrl);
-        fetch(fullUrl).then(function(response){
+        fetch(fullUrl).then(function (response){
             return response.json();
         })
+        //variables for current weather defined
             .then(function (data){
                 console.log(data);
                 var cityName = data.name;
                 var temp = data.main.temp;
-                var humidity = data.main.humidity;
-                var weather = data.weather;
                 var wind =data.wind;
-                var cityNameDiv = $(",div class='city-name'>");
+                var weather = data.weather;
+                var humidity = data.main.humidity;
+            //text to display for weather components
+                var cityNameDiv = $("<div class='city-name'>");
                 var tempDiv = $("<div class='temp-name'>");
                 var windDiv = $("<div class='wind-name'>");
                 var humidityDiv = $("<div class='humidity-name'>");
                 var weatherImg = $("<img class='icon-name' />");
-                
-                dayDIV.text(day);
+                //Defining the divs info to display
+                cityNameDIV.text(day);
                 weatherImg.attr('src', iconURL)
-                
-                // cityNameDiv.text(cityName);
-                tempDiv.text("Temperature: " + temp);
+                tempDiv.text("Temperature: " + temp + " °F");
                 windDiv.text("Wind Speed: " + wind.speed + "MPH")
                 humidityDiv.text("Humidity: " + humidity + "%");
             
                 //Combining values to create a more presentable container
-                rowDiv.append(humidityDiv);
-                rowDiv.append(dayDiv);
-                rowDiv.append(tempDiv);
-                rowDiv.append(windDiv);
-                rowDiv.append(weatherImg);
-            }
+                currentWeatherContainer.append(humidityDiv);
+                currentWeatherContainer.append(cityNameDiv);
+                currentWeatherContainer.append(tempDiv);
+                currentWeatherContainer.append(windDiv);
+                currentWeatherContainer.append(weatherImg);
+            });
         
-        });
+        };
+    
       // five day forecast
-    function searchForFiveDayForecastWeather(city) {
+      function searchForFiveDayForecastWeather(city) {
         fiveDayForeCastContainer.html("");
         // create URL for search
         currentWeatherContainer.html("");
         var forecastUrl = baseUrl2 + "q=" + city + "&units=imperial" +  "&appid=" + apiKey;
-        fetch(forecastUrl).then(function(responseFromOpenWeatherMapUnprocessed) {
+        fetch(forecastUrl).then(function(responseFromOpenWeatherMapUnprocessed:Response) {
            return responseFromOpenWeatherMapUnprocessed.json(); 
         }).then(function(data) {
             console.log("Five Day Forecast" , data);
@@ -124,13 +128,13 @@ $(document).ready(function(){
                     rowDiv.append(humidityDiv);
                     rowDiv.append(windDiv);
                     fiveDayForeCastContainer.append(rowDiv);
-                });
-            })
-     
-    
+                }
+            }
+        });
+    }
     function getUvIndex(lat, lon) {
         console.log(lat,lon);
-        var finalUrl = uvIndexBaseUrl + "lat=" +  lat + "&lon=" + lon + "&exclude=hourly,daily&appid=" + apiKey;
+        var finalUrl = uvIndexBaseUrl + "&lat=" +  lat + "&lon=" + lon + "&exclude=hourly,daily&appid=" + apiKey;
         fetch(finalUrl).then(function(response) {
             return response.json();
         }).then(function(data) {
@@ -152,24 +156,25 @@ $(document).ready(function(){
         });
     //function searchForFiveDayForecastWeather(city) {
     function retrieveSearchHistory() {
-        if (localStorage.getItem('searchHerstory')) {
-            searchHerstory = JSON.parse(localStorage.getItem('searchHerstory'));
-            for (var i = 0; i < searchHerstory.length; i++) {
+        if (localStorage.getItem('searchHistory')) {
+            searchHerstory = JSON.parse(localStorage.getItem('searchHistory'));
+            for (var i = 0; i < searchHistory.length; i++) {
                 var searchWordDiv = $('<button type="button" class="btn-past-search-word">');
                 searchWordDiv.click(function(event) {
                    event.preventDefault();
                    var value = $(this).text();
-                   console.log(value); 
+                   searchForCurrentCityWeather(value);
+                   searchForFiveDayForecastWeather(value);
                 });
-                searchWordDiv.text(searchHerstory[i]);
-                searchHerstoryContainer.append(searchTermDiv);
+                searchWordDiv.text(searchHistory[i]);
+                searchHistoryContainer.append(searchWordiv);
             }
         }
     }
     $('.past-search-word').click(function(event) {
         event.preventDefault();
-        console.log9event.target);
+        console.logevent.target);
     })
 
-        retrieveSearchHertory();
-}
+    retrieveSearchHistory();
+});
