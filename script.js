@@ -83,23 +83,23 @@ $(document).ready(function(){
       // five day forecast
       function searchForFiveDayForecastWeather(city) {
         fiveDayForeCastContainer.html("");
-        // create URL for search
+        // using api create a url for search
         currentWeatherContainer.html("");
         var forecastUrl = baseUrl2 + "q=" + city + "&units=imperial" +  "&appid=" + apiKey;
-        fetch(forecastUrl).then(function(responseFromOpenWeatherMapUnprocessed:Response) {
-           return responseFromOpenWeatherMapUnprocessed.json(); 
+        fetch(forecastUrl).then(function(responseFromOpenWeatherMapUnprocessed) {
+           return responseFromOpenWeatherMapUnprocessed.json() 
         }).then(function(data) {
             console.log("Five Day Forecast" , data);
             var coords = data.city.coord;
             console.log(coords);
             getUvIndex(coords.lat, coords.lon);
-            // loop through 5 day forecast data
+            // create loop
             for (var i=0; i < data.list.length; i++) {
                 // only use weather at 3 pm
                 var isThreeOClock = data.list[i].dt_txt.search("15:00:00");
                 var cityName = data.city.name;
                 if (isThreeOClock > -1) {
-                    // vars for five day forecast
+                    // variables for five day forecast
                     var forecast = data.list[i];
                     var temp = forecast.main.temp;
                     var humidity = forecast.main.humidity;
@@ -121,7 +121,7 @@ $(document).ready(function(){
                     tempDiv.text("Temperature: " + temp + " °F");
                     humidityDiv.text("Humidity: " + humidity + "%");
                     windDiv.text("Wind Speed: " + wind.speed + " MPH");
-                    // put info in the divs
+                    // Assign info for the divs
                     rowDiv.append(weatherDiv);
                     rowDiv.append(dayDiv);
                     rowDiv.append(tempDiv);
