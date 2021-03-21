@@ -130,27 +130,7 @@ $(document).ready(function(){
             }
         });
     }
-    function getUvIndex(lat, lon) {
-        var finalUrl = uvIndexBaseUrl + "&lat=" +  lat + "&lon=" + lon + "&exclude=hourly,daily&appid=" + apiKey;
-        fetch(finalUrl).then(function(response) {
-            return response.json();
-        }).then(function(data) {
-            console.log("UV DATA" , data);
-            var uvIndex = data.current.uvi;
-            var uvIndexDiv = $('<h5 class="uv-index-div">');
-            var uvIndexSpan = $('<span class="uv-index-number">');
-            if (uvIndex < 2) {
-                uvIndexSpan.addClass("uv-index-number-low")
-            } else if (uvIndex < 5) {
-                uvIndexSpan.addClass("uv-index-number-med")
-            } else {
-                uvIndexSpan.addClass("uv-index-number-high")
-            }
-            uvIndexSpan.text(uvIndex);
-            uvIndexDiv.text("UV Index: ");
-            uvIndexDiv.append(uvIndexSpan);
-            currentWeatherContainer.append(uvIndexDiv);
-        });
+
     //function searchForFiveDayForecastWeather(city) {
     function retrieveSearchHistory() {
         if (localStorage.getItem('searchHistory')) {
