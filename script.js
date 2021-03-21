@@ -171,9 +171,7 @@ $(document).ready(function(){
             }
         }
     }
-    $('.past-search-word').click(function(event) {
-        event.preventDefault();
-        console.logevent.target);
+
     })
 
     retrieveSearchHistory();
