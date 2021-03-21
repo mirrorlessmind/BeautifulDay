@@ -76,8 +76,80 @@ $(document).ready(function(){
             }
         
         });
+      // five day forecast
+    function searchForFiveDayForecastWeather(city) {
+        fiveDayForeCastContainer.html("");
+        // create URL for search
+        currentWeatherContainer.html("");
+        var forecastUrl = baseUrl2 + "q=" + city + "&units=imperial" +  "&appid=" + apiKey;
+        fetch(forecastUrl).then(function(responseFromOpenWeatherMapUnprocessed) {
+           return responseFromOpenWeatherMapUnprocessed.json(); 
+        }).then(function(data) {
+            console.log("Five Day Forecast" , data);
+            var coords = data.city.coord;
+            console.log(coords);
+            getUvIndex(coords.lat, coords.lon);
+            // loop through 5 day forecast data
+            for (var i=0; i < data.list.length; i++) {
+                // only use weather at 3 pm
+                var isThreeOClock = data.list[i].dt_txt.search("15:00:00");
+                var cityName = data.city.name;
+                if (isThreeOClock > -1) {
+                    // vars for five day forecast
+                    var forecast = data.list[i];
+                    var temp = forecast.main.temp;
+                    var humidity = forecast.main.humidity;
+                    var weather = forecast.weather;
+                    // create a url for the weather icon
+                    var iconUrl = iconBaseUrl + weather[0].icon + ".png";
+                    var wind = forecast.wind;
+                    var day = moment(forecast.dt_txt).format("dddd, MMMM Do");
+                    console.log(forecast, temp, humidity, weather, wind, day);
+                    // create divs for necessary data
+                    var rowDiv = $('<div class="col-2">' );
+                    var dayDiv = $('<div class="day-name">');
+                    var tempDiv = $('<div class="temp-name">');
+                    var humidityDiv = $('<div class="humidity-name">');
+                    var weatherDiv = $('<img class="icon-name">');
+                    var windDiv = $('<div class="wind-name">');
+                    weatherDiv.attr("src" , iconUrl);
+                    dayDiv.text(day);
+                    tempDiv.text("Temperature: " + temp + " °F");
+                    humidityDiv.text("Humidity: " + humidity + "%");
+                    windDiv.text("Wind Speed: " + wind.speed + " MPH");
+                    // put info in the divs
+                    rowDiv.append(weatherDiv);
+                    rowDiv.append(dayDiv);
+                    rowDiv.append(tempDiv);
+                    rowDiv.append(humidityDiv);
+                    rowDiv.append(windDiv);
+                    fiveDayForeCastContainer.append(rowDiv);
+                });
+            })
+     
     
-}
+    function getUvIndex(lat, lon) {
+        console.log(lat,lon);
+        var finalUrl = uvIndexBaseUrl + "lat=" +  lat + "&lon=" + lon + "&exclude=hourly,daily&appid=" + apiKey;
+        fetch(finalUrl).then(function(response) {
+            return response.json();
+        }).then(function(data) {
+            console.log("UV DATA" , data);
+            var uvIndex = data.current.uvi;
+            var uvIndexDiv = $('<h5 class="uv-index-div">');
+            var uvIndexSpan = $('<span class="uv-index-number">');
+            if (uvIndex < 2) {
+                uvIndexSpan.addClass("uv-index-number-low")
+            } else if (uvIndex < 5) {
+                uvIndexSpan.addClass("uv-index-number-med")
+            } else {
+                uvIndexSpan.addClass("uv-index-number-high")
+            }
+            uvIndexSpan.text(uvIndex);
+            uvIndexDiv.text("UV Index: ");
+            uvIndexDiv.append(uvIndexSpan);
+            currentWeatherContainer.append(uvIndexDiv);
+        });
     //function searchForFiveDayForecastWeather(city) {
     function retrieveSearchHistory() {
         if (localStorage.getItem('searchHerstory')) {
