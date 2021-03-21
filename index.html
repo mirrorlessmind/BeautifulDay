@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=>, initial-scale=1.0">
     
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
-    <link rel="stylesheet href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="/style.css"/>
 
     <title>Dashing 5 Day Weather</title>
@@ -16,9 +16,7 @@
     <header class="container-fluid text-center text-white bg-dark p-2">
         <h1> Dashing 5 Day Weather</h1>
     </header>
-
-    <body>
-   <div class="container">
+    <div class="container">
         <div class="dashboard row">
             <div class="form-for-search col-6">
                 <form id ="search-form">
@@ -27,15 +25,17 @@
                 </form>
                 <div class="search-history"> </div>
                  <h3>Search History</h3>
-                 <div id="past searches">
+                 <div id="past-searches">
                      <div class="past-search-term">
                     </div>
                 </div>
             </div>
             <div class="weather-data col-6">
-                <div class"current-weather" id="current-weather">
+                <div class="current-weather" id="current-weather">
+                    <h3>Current Weather Conditions</h3>
+                </div>    
+                <div class="five-day-forecast row" id="five-day-forecast">
                     <h3>Five Day Forecast Weather</h3>
-                    <div class="five-day-forecast row" id="five-day-forecast">
                     </div>
                 </div>
             </div>
@@ -44,6 +44,6 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script src="script.js"></script>
+    <script src="/script.js"></script>
 </body>
 </html>
