@@ -12,7 +12,7 @@ $(document).ready(function(){
     var baseUrl = 'https://api.openweathermap.org/data/2.5/weather?';
     var baseUrl2 = 'http://openweathermap.org/img/w/';
     var iconBaseUrl = 'http://openweathermap.org/img/w/';
-    var searchHerstory = [];
+    var searchHistory = [];
 
 // Form to search by city
     searchForm.submit(function( event ) {
@@ -22,8 +22,8 @@ $(document).ready(function(){
         var formValues = $(this).serializedArray();
         var city = formValues[0].value;
     //Creating Element for Jquery
-        var searchWordDiv = $('<button type="button" class=" btn past-search-word">');
-        searchWordDiv.click(function( event ) {
+        var searchWordDiv = $('<button type="button" class="btn past-search-word">');
+        searchWordDiv.click(function(event) {
             event.preventDefault();
             var value = event.target
             var value =$(this).text();
@@ -36,14 +36,14 @@ $(document).ready(function(){
         searchHistory.push(city);
         localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
         searchWordDiv.text(city);
-        searchHistoryContainer.append(searchTermDiv);
+        searchHistoryContainer.append(searchWordDiv);
         console.log(formValues, city);
         //Form Value display
-        searchForCurrentCity(city);
+        searchForCurrentCityWeather(city);
         searchForFiveDayForecastWeather(city);
 });
         //Use Api Key to search with function Use Moment for date
-        function searchForCurrentCity(city) {
+        function searchForCurrentCityWeather(city) {
         var fullUrl = baseUrl + "q=" + city + "&units=imperial" + "&appid" + apiKey;
         console.log(fullUrl);
         fetch(fullUrl).then(function (response){
@@ -64,7 +64,7 @@ $(document).ready(function(){
                 var humidityDiv = $("<div class='humidity-name'>");
                 var weatherImg = $("<img class='icon-name' />");
                 //Defining the divs info to display
-                cityNameDIV.text(day);
+                cityNameDiv.text(name);
                 weatherImg.attr('src', iconURL)
                 tempDiv.text("Temperature: " + temp + " °F");
                 windDiv.text("Wind Speed: " + wind.speed + "MPH")
@@ -82,7 +82,7 @@ $(document).ready(function(){
     
       // five day forecast
       function searchForFiveDayForecastWeather(city) {
-        fiveDayForeCastContainer.html("");
+        fiveDayForecastContainer.html("");
         // using api create a url for search
         currentWeatherContainer.html("");
         var forecastUrl = baseUrl2 + "q=" + city + "&units=imperial" +  "&appid=" + apiKey;
@@ -90,8 +90,7 @@ $(document).ready(function(){
            return responseFromOpenWeatherMapUnprocessed.json() 
         }).then(function(data) {
             console.log("Five Day Forecast" , data);
-            var coords = data.city.coord;
-            console.log(coords);
+            var coordinate = data.city.coord;
             getUvIndex(coords.lat, coords.lon);
             // create loop
             for (var i=0; i < data.list.length; i++) {
@@ -108,7 +107,6 @@ $(document).ready(function(){
                     var iconUrl = iconBaseUrl + weather[0].icon + ".png";
                     var wind = forecast.wind;
                     var day = moment(forecast.dt_txt).format("dddd, MMMM Do");
-                    console.log(forecast, temp, humidity, weather, wind, day);
                     // create divs for necessary data
                     var rowDiv = $('<div class="col-2">' );
                     var dayDiv = $('<div class="day-name">');
@@ -127,13 +125,12 @@ $(document).ready(function(){
                     rowDiv.append(tempDiv);
                     rowDiv.append(humidityDiv);
                     rowDiv.append(windDiv);
-                    fiveDayForeCastContainer.append(rowDiv);
+                    fiveDayForecastContainer.append(rowDiv);
                 }
             }
         });
     }
     function getUvIndex(lat, lon) {
-        console.log(lat,lon);
         var finalUrl = uvIndexBaseUrl + "&lat=" +  lat + "&lon=" + lon + "&exclude=hourly,daily&appid=" + apiKey;
         fetch(finalUrl).then(function(response) {
             return response.json();
@@ -167,12 +164,10 @@ $(document).ready(function(){
                    searchForFiveDayForecastWeather(value);
                 });
                 searchWordDiv.text(searchHistory[i]);
-                searchHistoryContainer.append(searchWordiv);
+                searchHistoryContainer.append(searchWordDiv);
             }
         }
     }
-
-    })
 
     retrieveSearchHistory();
 });
