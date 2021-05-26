@@ -1,4 +1,4 @@
-// e80f67133f09a88799707360e64bc4ef
+/// e80f67133f09a88799707360e64bc4ef
 $(document).ready(function () {
     var searchForm = $('#search-form');
     var searchHistoryContainer = $('#past-searches');
@@ -17,11 +17,8 @@ $(document).ready(function () {
     searchForm.submit(function (event) {
         event.preventDefault();
         console.log(event);
-        //Use This is for form submitted
         var formValues = $(this).serializeArray();
         var city = formValues[0].value;
-        //Creating Element for Jquery
-        //var searchWordDiv = $('<button type="button" class=" btn past-search-word">');
         var searchTermDiv = $('<button type="button" btn btn-primary class="btn-past-search-word">');
             searchTermDiv.click(function(event) {
                 event.preventDefault();
@@ -30,7 +27,7 @@ $(document).ready(function () {
                 searchForFiveDayForecastWeather(value);
                 console.log(value);
       
-    });
+    })
     searchHistory.push(city);
     localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
     searchTermDiv.text(city);
@@ -44,12 +41,12 @@ $(document).ready(function () {
 //Use Api to search with function. Moment for date
 function searchForCurrentCityWeather(city) {
     currentWeatherContainer.html("");
-    var fullUrl = baseUrl + "q=" + city + "&units=imperial" + "&appid" + apiKey;
+    var fullUrl = baseUrl + "q=" + city + "&appid=" + apiKey + "&units=imperial";
     console.log(fullUrl);
     fetch(fullUrl).then(function (response) {
         return response.json();
     })
-        //variables for current weather defined
+        //variables for current weather defined here
         .then(function (data) {
             console.log(data);
             var cityName = data.name;
@@ -64,7 +61,7 @@ function searchForCurrentCityWeather(city) {
             var tempDiv = $("<div class='temp-name'>");
             var windDiv = $("<div class='wind-name'>");
             var humidityDiv = $("<div class='humidity-name'>");
-            var weatherDiv = $("<img class='icon-name' />");
+            var weatherImg = $("<img class='icon-name' />");
             //Defining the divs info to display
             cityNameDIV.text(cityName);
             weatherImg.attr('src', iconUrl);
@@ -72,7 +69,7 @@ function searchForCurrentCityWeather(city) {
             windDiv.text("Wind Speed: " + wind.speed + "MPH")
             humidityDiv.text("Humidity: " + humidity + "%");
 
-            //Combining values to create a more presentable container
+            //Visually represent data more appealing
             currentWeatherContainer.append(cityNameDiv);
             currentWeatherContainer.append(humidityDiv);
             currentWeatherContainer.append(tempDiv);
@@ -82,20 +79,17 @@ function searchForCurrentCityWeather(city) {
 
 };
 
-// five day forecast for the searced city
+// five day forecast for the searched city
 function searchForFiveDayForecastWeather(city) {
     fiveDayForecastContainer.html("");
     // using api create a url for search
-    currentWeatherContainer.html("");
     var forecastUrl = baseUrl2 + "q=" + city + "&units=imperial" + "&appid=" + apiKey;
-    fetch(forecastUrl).then(function (responseFromOpenWeatherMapUnProcessed) {
-        return responseFromOpenWeatherMapUnprocessed.json()
+    fetch(forecastUrl).then(function (response) {
+        return response.json()
     }).then(function (data) {
         console.log("Five Day Forecast" , data);
         var coords = data.city.coord;
-        console.log(coords);
         getUvIndex(coords.lat, coords.lon);
-        // create loop
         for (var i = 0; i < data.list.length; i++) {
             //time based variable based on 3:00pm
             var isThreeOClock = data.list[i].dt_txt.search("15:00:00");
@@ -115,7 +109,7 @@ function searchForFiveDayForecastWeather(city) {
                 var dayDiv = $('<div class="day-name">');
                 var tempDiv = $('<div class="temp-name">');
                 var humidityDiv = $('<div class="humidity-name">');
-                var weatherDiv = $('<img class="icon-name">');
+                var weatherImg = $('<img class="icon-name">');
                 var windDiv = $('<div class="wind-name">');
                 weatherImg.attr("src", iconUrl);
                 dayDiv.text(day);
@@ -141,7 +135,6 @@ function getUvIndex(lat, lon) {
         return response.json();
     }).then(function(data) {
         var uvIndex = data.current.uvi;
-        console.log(uvIndex, typeof uvIndex)
         var uvIndexDiv = $('<div class="uv-index-div">');
         var uvIndexSpan = $('<span class="uv-index-number">');
         if (uvIndex < 2) {
