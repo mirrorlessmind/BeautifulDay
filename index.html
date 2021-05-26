@@ -1,52 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css"/>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+        integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/style.css" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
         integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous" />
     <title>Dashing 5 Day Weather</title>
 </head>
 
 <body>
-    < class="container-fluid text-center text-white bg-dark p-2">
+    <header id="dashboard-header"></header>
+    <div class="container"></div>
+    <h1 class="text-center text-white display-5">
         <h1> Dashing 5 Day Weather</h1>
-    </header>
-    <div class="container">
-        <div class="dashboard row">
-            <div class="form-for-search col-6">
-                <form id ="search-form">
-                    <input type="text" name="city" placeholder="Search" />
-                    <button type="submit" class="btn"> Search </button>
-                </form>
-                <div class="search-history"> </div>
-                 <h3>Search History</h3>
-                 <div id="past-searches">
-                     <div class="past-search-term">
+        </header>
+            <!-- Search Bar -->
+            <div class="dashboard row">
+                <div class="form-inputs mb-3 col-md-4">
+                    <form id="search-form">
+                    <input type="text" name="city" placeholder="City Name" id="search-value" />
+                    <input type="text" name="city" class="btn" placeholder="Search" 
+                    aria-label="Search for a City"
+                        aria-describedby="button-addon2" id="search-value">
+                    <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" type="button" id="add-city"><i
+                                class="fas fa-search"></i></button>
+                            </form>
                     </div>
                 </div>
-            </div>
-            <div class="weather-data col-6">
-                <div class="current-weather" id="current-weather">
-                    <h3>Current Weather Conditions</h3>
-                </div>    
-                <div class="five-day-forecast col-6" id="five-day-forecast">
-                    <h3>Five Day Forecast Weather</h3>
-                    </div>
+
+                <!-- Div for current weather display -->
+                <div class="card col-md-8" style="width:20rem;" id="current-weather-container">
+                    <h4 class="text-center">Current City Weather</h4>
+                    <div class="current-weather" id="current-weather"></div>
+                    <div id="current-date"></div>
                 </div>
             </div>
-    </div>
-    <script   src="https://code.jquery.com/jquery-3.6.0.slim.js"   integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY="   crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"   integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="   crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="script.js"></script>
+
+            <!-- Div for searches to save in -->
+            <div class="row">
+                <div class="col-md-4" id="search-history">
+                
+                </div>
+
+                <!-- Div for five-day forecast display -->
+                <div class="card col-md-8" style="width:20rem;" id="five-day-weather">
+                    <h5 class="text-center">Five Day Forecast Weather</h5>
+                    <div class="row">
+                        <div class="col-sm display-5-day">Day 1<div id="day-1"></div>
+                        </div>
+                        <div class="col-sm display-5-day">Day 2<div id="day-2"></div>
+                        </div>
+                        <div class="col-sm display-5-day">Day 3<div id="day-3"></div>
+                        </div>
+                        <div class="col-sm display-5-day">Day 4<div id="day-4"></div>
+                        </div>
+                        <div class="col-sm display-5-day">Day 5<div id="day-5"></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.slim.js"
+            integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="assets/script.js"></script>
 </body>
+
 </html>

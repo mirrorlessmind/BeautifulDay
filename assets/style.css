@@ -1,0 +1,107 @@
+h1 {
+    color:rgb(49, 107, 107);
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;   
+}
+
+body {
+    font-family: "Monserrat", "Avenir";
+}
+
+#dashboard-header {
+    background-color: #276e77;
+    color: rgb(220, 220, 230);
+    padding: 10px;
+    padding-top: 40px;
+    text-transform: uppercase;
+    letter-spacing: 0.25rem;
+    font-weight: lighter;
+}
+
+.selected {
+    background-color: #276e77;
+}
+
+h5 {
+    margin-top: 10px;
+    font-weight: lighter;
+}
+
+button {
+    background-color: #276e77 !important;
+    color: rgb(220, 220, 230)!important;
+    max-height: 38px;
+    transition: all 0.3s;
+    outline: none !important;
+}
+
+button:hover {
+    background-color: #276e77 !important;
+    color: #232323;
+}
+
+.card {
+    padding: 5px;
+    margin-bottom: 5px;
+}
+
+#search-history {
+    float: left;
+    justify-content: left;
+}
+
+.city-btn {
+    padding: 5px;
+    margin: 10px;
+    display: block;
+    width: 100%;
+}
+
+.uv-index {
+    color: #ebba51;
+}
+
+#five-day-weather-container {
+    display: flex;
+    position: relative;
+}
+
+.display-5-day {
+    background-color: #bebebb;
+    border-radius: 10px;
+    width: 75px;
+    height: 175px;
+    padding: 5px;
+    margin: 10px;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+@media (max-width: 991px) {
+    .display-5-day {
+        width: 200px;
+        height: 300px;
+    }
+}
+
+@media (max-width: 767px) {
+    #current-weather-container {
+        width: 100%;
+        margin: 0 auto;
+    }
+
+    #five-day-weather {
+        width: 100%;
+        margin: 0 auto;
+    }
+}
+
+
+@media (max-width: 575px) {
+    .display-5-day {
+        margin: 5px auto;
+    }
+}
