@@ -12,16 +12,16 @@ To view our code for this application, visit the GitHub Repository:
 
 Visit the deployed site below:
 
-[Beautiful Day Deployed Site](https://stephmarie17.github.io/weather-dashboard/)
+[Beautiful Day Deployed Site](https://mirrorlessmind.github.io/BeautifulDay)
 
 
 
 ## Usage
 Users will enter the name of the city that that would like to check the weather on. User will not get a search result without entering a valid cityEnter the name of the city for which you would like to see data. Users may need to alter their preferences for the Open Weather API to work on the Chrome Extension
 
-![Search for Your City](.gif)
+![Search for Your City](demo.gif)
 
-![Whoops! enter Your City Name](.gif)
+![Whoops! enter Your City Name](error.gif)
 
 ## Reference
 To learn more about this awesome API, go to their site:
