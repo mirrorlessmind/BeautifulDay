@@ -1,4 +1,3 @@
-// e80f67133f09a88799707360e64bc4ef
 $(document).ready(function () {
     var searchForm = $('#search-form');
     var searchHistoryContainer = $('#past-searches');
@@ -99,15 +98,16 @@ function searchForFiveDayForecastWeather(city) {
                 var humidity = forecast.main.humidity;
                 var iconUrl = iconBaseUrl + weather[0].icon + ".png";
                 var wind = forecast.wind;
-                var day = moment(forecast.dt_txt).format("dddd, MMMM Do");
-                console.log(forecast, temp, humidity, weather, wind, day);
-                // create divs for necessary data
+                var day = moment(forecast.dt_txt).format("dddd, MMMM Do YYYY");
+                console.log(forecast, temp, humidity, weather, wind, day, cityName);
+                // create divs for requested data
                 var rowDiv = $("<div class='col-2'>");
                 var dayDiv = $("<div class='day-name'>");
                 var tempDiv = $("<div class='temp-name'>");
                 var humidityDiv = $("<div class='humidity-name'>");
                 var weatherImg = $("<img class='icon-name'>");
                 var windDiv = $("<div class='wind-name'>");
+
                 weatherImg.attr("src", iconUrl);
                 dayDiv.text(day);
                 tempDiv.text("Temperature: " + temp + " °F");
@@ -124,7 +124,7 @@ function searchForFiveDayForecastWeather(city) {
         }
     });
 }
-//UV index help from TA
+//UV index help from TA using specific latitude and longitude
 function getUvIndex(lat, lon) {
     console.log(lat,lon);
     var finalUrl = uvIndexBaseUrl + "lat=" +  lat + "&lon=" + lon + "&exclude=hourly,daily&appid=" + apiKey;
@@ -132,8 +132,8 @@ function getUvIndex(lat, lon) {
         return response.json();
     }).then(function(data) {
         var uvIndex = data.current.uvi;
-        var uvIndexDiv = $('<div class="uv-index-div">');
-        var uvIndexSpan = $('<span class="uv-index-number">');
+        var uvIndexDiv = $("<div class='uv-index-div'>")
+        var uvIndexSpan = $("<span class='uv-index-number'>")
         if (uvIndex < 2) {
             uvIndexSpan.addClass("uv-index-number-low")
         } else if (uvIndex < 5) {
@@ -147,7 +147,7 @@ function getUvIndex(lat, lon) {
         currentWeatherContainer.append(uvIndexDiv);
     });
 }
-//function shows previous searches for cities
+//function shows previous searches for cities using local storage
 function retrieveSearchHistory() {
     if (localStorage.getItem('searchHistory')) {
         searchHistory = JSON.parse(localStorage.getItem('searchHistory'));
@@ -155,15 +155,14 @@ function retrieveSearchHistory() {
             var searchTermDiv = $('<button type="button" class="btn btn-primary btn-past-search-term">');
             searchTermDiv.click(function (event) {
                 event.preventDefault();
-                var value = $(this).text();
+                var value = $(this).text;
                 searchForCurrentCityWeather(value);
                 searchForFiveDayForecastWeather(value);
-            });
+            })
             searchTermDiv.text(searchHistory[i]);
-            searchHistoryContainer.append(searchWordDiv);
+            searchHistoryContainer.append(searchTermDiv);
         }
     }
 }
 retrieveSearchHistory();
 });
-
